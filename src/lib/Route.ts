@@ -19,7 +19,6 @@ class Route {
     return sum(steps.map((step, i) => (
       distance(points[step], points[steps[(i+1) % points.length]])
     )));
-    return sumBy(steps, i => distance(points[i], points[(i+1) % points.length]))
   }
 
   getPoints(): Point[] {

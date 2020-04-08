@@ -14,7 +14,7 @@ class App extends React.Component<{}, State> {
   constructor(props: {}) {
     super(props)
 
-    this.engine = SalesmanEngine(15, 50)
+    this.engine = SalesmanEngine(10, 10)
 
     this.state = {
       best: this.engine.bestSolution
@@ -22,15 +22,28 @@ class App extends React.Component<{}, State> {
   }
 
   render() {
+    const route = this.state.best
+
     return (
       <div>
         <h1>Best route</h1>
         <CycleDisplay
-          points={this.state.best.getPoints()}
+          points={route.getPoints()}
           width={500} height={500} radius={5}
         />
+        <button onClick={this.nextEpoch}>Next epoch</button>
+        <p>Length: {route.length()}</p>
       </div>
     )
+  }
+
+  nextEpoch = () => {
+    (async () => {
+      for (let i = 0; i < 1000; i++) {
+        this.engine.nextEpoch()
+        this.setState({ best: this.engine.bestSolution }, () => console.log(this.engine))
+      }
+    })()
   }
 }
 
